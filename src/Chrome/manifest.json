@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name": "Swagger Auth",
+  "description": "Quick tool for generating auth tokens",
+  "version": "0.1",
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "*://*/"
+  ]
+}
