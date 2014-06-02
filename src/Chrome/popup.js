@@ -1,6 +1,29 @@
 var init = function () {
 	injectContentJS(function () {
-		chrome.tabs.executeScript(null, { code: 'contentJS.setTokenField("test");' });
+	});
+	
+	$('h1').on('click', function(){
+		 var fileList            = 
+		document.getElementById('settingsFile').files; 
+		
+		    // Make sure file has been selected 
+		    if (!(fileList instanceof FileList) || fileList.length === 0){ 
+		
+		        alert('You must select a settings file to import. Click the Choose File to select a file.'); 
+		        return false; 
+		    } 
+		
+		    var fileReader = new FileReader(); 
+		
+		    fileReader.onloadend = (function(file){ 
+		
+		        return function(e) { 
+		        	console.log(e.target.result);
+		        } 
+		
+		    })(fileList[0]); 
+		
+		    fileReader.readAsText(fileList[0]); 
 	});
 }
 
@@ -14,4 +37,6 @@ var injectContentJS = function (callback) {
 	});
 }
 
-init();
+$(function () {
+	init();
+});
