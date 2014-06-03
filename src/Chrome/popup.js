@@ -1,5 +1,7 @@
 var init = function () {
+	// TODO: wrap this in the browser action click handler to avoid permission warning
 	injectContentJS(function () {
+		
 	});
 	
 	$('h1').on('click', function(){
