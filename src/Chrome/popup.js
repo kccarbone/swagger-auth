@@ -1,10 +1,10 @@
 var init = function () {
-	// TODO: wrap this in the browser action click handler to avoid permission warning
-	injectContentJS(function () {
-		
+	
+	$('.nav li').on('click', function () { 
+		setActiveIndex($('.nav li').index(this));
 	});
 	
-	$('h1').on('click', function(){
+	$('h1').on('click', function () {
 		 var fileList            = 
 		document.getElementById('settingsFile').files; 
 		
@@ -27,7 +27,20 @@ var init = function () {
 		
 		    fileReader.readAsText(fileList[0]); 
 	});
-}
+	
+	
+	// TODO: wrap this in the browser action click handler to avoid permission warning
+	injectContentJS(function () {
+		
+	});
+	
+	setActiveIndex(0);
+};
+
+var setActiveIndex = function (index) {
+	$('.nav li').removeClass('active').eq(index).addClass('active');
+	$('.content').removeClass('active').eq(index).addClass('active');
+};
 
 var injectContentJS = function (callback) {
 	chrome.tabs.executeScript(null, { file: "jquery.js" }, function(){
@@ -37,7 +50,7 @@ var injectContentJS = function (callback) {
 			}
 		});
 	});
-}
+};
 
 $(function () {
 	init();
