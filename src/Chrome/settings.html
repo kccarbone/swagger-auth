@@ -1,0 +1,26 @@
+<html>
+<head>
+	<link type="text/css" href="css/settings.css" rel="stylesheet" media="all" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/settings.js"></script>
+</head>
+<body>
+	<div class="main">
+		<div class="prefs">
+			<p><strong>Import settings</strong></p>
+			<p>Here you can import a new Swagger Auth settings file. All existing settings will be overwritten.</p>
+		</div>
+		<div class="no-prefs">
+			<p><strong>Settings not found!</strong></p>
+			<p>Please import a Swagger Auth settings file to get started. You will only need to do this once.</p>
+		</div>
+		<div class="importer">
+			<input type="file" id="settings-file" />
+			<button id="import-settings">Import</button>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<br />
+	<button id="clear-prefs">Clear prefs</button>
+</body>
+</html>
