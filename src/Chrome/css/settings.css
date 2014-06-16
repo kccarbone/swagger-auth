@@ -4,6 +4,19 @@ body {
 	color: #222;
 }
 
+.main {
+    margin: 20px auto;
+    padding: 10px;
+    width: 450px;
+    background-color: #eee;
+    border: solid 1px #999;
+}
+
+h1 {
+    font-size: 14px;
+    margin-top: 0;
+}
+
 .no-prefs {
 	display: none;
 }
