@@ -6,18 +6,27 @@
 </head>
 <body>
 	<div class="main">
-		<div class="prefs">
-			<h1>Import settings</h1>
-			<p>Here you can import a new Swagger Auth settings file. All existing settings will be overwritten.</p>
-		</div>
-		<div class="no-prefs">
-			<p><strong>Settings not found!</strong></p>
-			<p>Please import a Swagger Auth settings file to get started. You will only need to do this once.</p>
+		<div class="header">
+			<h1>SwaggerAuth Settings</h1>
+			<p>Select a Swagger Auth settings file to import new settings. Environment and connection settings will be overwritten. Saved user settings will be merged in.</p>
 		</div>
 		<div class="importer">
 			<input type="file" id="settings-file" />
 			<button id="import-settings">Import</button>
 			<div class="clear"></div>
+		</div>
+        <hr />
+		<div class="prefs">
+            <h2>General Settings</h2>
+            <div></div>
+		</div>
+		<div class="users">
+            <hr />
+            <h2>User Settings</h2>
+            <div></div>
+		</div>
+		<div class="no-prefs">
+			<p>No settings loaded</p>
 		</div>
 	</div>
 	<br />

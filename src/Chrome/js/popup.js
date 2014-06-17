@@ -1,3 +1,5 @@
+var preferences;
+
 var init = function () {
 	
 	$('.nav li').on('click', function () { 
@@ -27,7 +29,7 @@ var setActiveIndex = function (index) {
 var loadPrefs = function () {
 	chrome.storage.sync.get('prefs', function (result) {
 		if (result.prefs) {
-			prefs = result.prefs;
+		    preferences = result.prefs;
 		}
 		else {
 			setActiveIndex(2);

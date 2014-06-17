@@ -13,12 +13,39 @@ body {
 }
 
 h1 {
-    font-size: 14px;
+    font-size: 15px;
     margin-top: 0;
 }
 
-.no-prefs {
-	display: none;
+h2 {
+    color: #999;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.no-prefs p {
+	font-weight: bold;
+    text-align: center;
+}
+
+.prefs p {
+    line-height: 15px;
+    margin: 2px 0;
+}
+
+.prefs .pref-error {
+    font-weight: bold;
+    padding-left: 20px;
+    background: url(../images/error.png) no-repeat;
+}
+
+.prefs .pref-success {
+    padding-left: 20px;
+    background: url(../images/success.png) no-repeat;
+}
+
+.prefs div, .users div {
+    margin-left: 20px;
 }
 
 .importer {
@@ -28,4 +55,22 @@ h1 {
 
 #import-settings {
 	float: right;
+}
+
+.users table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.users th, .users td {
+    font-size: 12px;
+    text-align: left;
+}
+
+.users th:first-of-type, .users td:first-of-type {
+    width: 20px;
+}
+
+.users tr:hover {
+    background-color: #ddd;
 }
