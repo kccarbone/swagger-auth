@@ -23,6 +23,11 @@ h2 {
     margin: 5px 0;
 }
 
+.loading p {
+	font-weight: bold;
+    text-align: center;
+}
+
 .no-prefs p {
 	font-weight: bold;
     text-align: center;
@@ -73,4 +78,14 @@ h2 {
 
 .users tr:hover {
     background-color: #ddd;
+}
+
+img.delete {
+    cursor: pointer;
+}
+
+#tbNewUser, #tbNewUserId {
+    font-size: 12px;
+    background-color: #f6f6f6;
+    border: solid 1px #999;
 }

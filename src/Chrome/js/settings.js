@@ -12,6 +12,7 @@ var loadPrefs = function () {
     var $prefs = $('.prefs, .users');
     var $noprefs = $('.no-prefs');
     var $content = $('.prefs div');
+    var $loading = $('.loading');
     var oldUsers = [];
 
     if (preferences && preferences.Users) {
@@ -20,6 +21,7 @@ var loadPrefs = function () {
 
     $prefs.hide();
     $noprefs.hide();
+    $loading.show();
 
     var addError = function (msg) {
         $content.append('<p class="pref-error">' + msg + '</p>');
@@ -90,6 +92,7 @@ var loadPrefs = function () {
         }
 
         updateUsers();
+        $loading.hide();
     });
 };
 
@@ -97,7 +100,7 @@ var updateUsers = function () {
     var $content = $('.users div');
     var html = '';
 
-    if (!!preferences.Users && preferences.Users.length > 0) {
+    if (!!preferences.Users) {
         html += ('<table>');
         html += ('<tr><th>&nbsp;</th><th>User</th><th>User ID</th></tr>');
 
@@ -105,16 +108,83 @@ var updateUsers = function () {
             var user = this;
 
             html += '<tr>';
-            html += '<td><img src="images/delete.png" /></td>';
+            html += '<td><img src="images/delete.png" class="delete" /></td>';
             html += '<td>' + user.Name + '</td>';
             html += '<td>' + user.UserId + '</td>';
             html += '</tr>';
         });
 
+        html += '<tr>';
+        html += '<td><img src="images/add.png" /></td>';
+        html += '<td><input type="text" id="tbNewUser" /></td>';
+        html += '<td><input type="text" id="tbNewUserId" /></td>';
+        html += '</tr>';
+
         html += ('</table>');
     }
 
     $content.html(html);
+
+    var deleteHandler = function () {
+        var $row = $(this).parent().parent();
+        var index = $row.prevAll().length - 1;
+
+        $row.css({ backgroundColor: '#ecc' })
+            .fadeOut(300, function () { $(this).remove(); });
+
+        preferences.Users.splice(index, 1);
+        commitPrefs(preferences);
+        console.log(preferences.Users);
+    };
+
+    var createHandler = function (row) {
+        var $row = $(row);
+        var $newUser = $('#tbNewUser');
+        var $newUserId = $('#tbNewUserId');
+        var newItemHtml = '';
+        var newVal, $newItem;
+
+        if ($newUser.val() != '' && $newUserId.val() != '') {
+            newItemHtml += '<tr>';
+            newItemHtml += '<td><img src="images/delete.png" class="delete" /></td>';
+            newItemHtml += '<td>' + $newUser.val() + '</td>';
+            newItemHtml += '<td>' + $newUserId.val() + '</td>';
+            newItemHtml += '</tr>';
+
+            newVal = { Name: $newUser.val(), UserId: $newUserId.val() };
+            preferences.Users.push(newVal);
+            commitPrefs(preferences);
+
+            $newItem = $(newItemHtml);
+            $row.before($newItem);
+            $newItem.find('img.delete').on('click', deleteHandler);
+            $newItem.css({ backgroundColor: '#cec' })
+                .animate({ backgroundColor: '#eee' }, 500, function () { $(this).css({ backgroundColor: '' }) })
+            $newUserId.val('');
+            $newUser.val('').focus();
+        }
+    };
+
+    $('img.delete')
+        .off('click')
+        .on('click', deleteHandler);
+
+    $('#tbNewUser, #tbNewUserId')
+        .off('keypress')
+        .on('keypress', function (e) {
+            if (e.which == 13) {
+                createHandler($(this).parent().parent());
+            }
+        });
+
+    $('#tbNewUserId')
+        .off('keydown')
+        .on('keydown', function (e) {
+            if (e.which == 9) {
+                e.preventDefault();
+                createHandler($(this).parent().parent());
+            }
+        });
 };
 
 var importPrefs = function () {
