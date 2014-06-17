@@ -17,7 +17,21 @@
 		
 		<div class="content-wrapper">
 			<div class="content">
-				<p>Login area</p>
+				<table>
+                    <tr>
+                        <td>Username: </td>
+                        <td colspan="2"><input type="text" id="tbUserName" /></td>
+                    </tr>
+                    <tr>
+                        <td>Password: </td>
+                        <td colspan="2"><input type="text" id="tbPassword" /></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td><input type="checkbox" id="cbSavePassword" /><label for="cbSavePassword">Save password</label></td>
+                        <td><button class="submit" id="btnUserLogin">Login</button></td>
+                    </tr>
+				</table>
 			</div>
 			<div class="content">
 				<p>impersonation area</p>
@@ -37,6 +51,17 @@
 			</div>
 		</div>
 		
+        <div id="loadingBar">
+            <div id="loadingBar_1" class="loadingBar"></div>
+            <div id="loadingBar_2" class="loadingBar"></div>
+            <div id="loadingBar_3" class="loadingBar"></div>
+            <div id="loadingBar_4" class="loadingBar"></div>
+            <div id="loadingBar_5" class="loadingBar"></div>
+            <div id="loadingBar_6" class="loadingBar"></div>
+            <div id="loadingBar_7" class="loadingBar"></div>
+            <div id="loadingBar_8" class="loadingBar"></div>
+        </div>
+
 		<h1>Swagger Auth</h1>
 	</div>
 </body>

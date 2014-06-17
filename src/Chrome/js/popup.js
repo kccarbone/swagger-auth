@@ -11,6 +11,10 @@ var init = function () {
 	$('.settings-link button').on('click', function () {
 		chrome.tabs.create({'url': chrome.extension.getURL("settings.html") } )
 	});
+
+	$('#btnUserLogin').on('click', function () {
+        setLoading();
+	});
 	
 	// TODO: wrap this in the browser action click handler to avoid permission warning
 	injectContentJS(function () {
@@ -24,6 +28,16 @@ var init = function () {
 var setActiveIndex = function (index) {
 	$('.nav li').removeClass('active').eq(index).addClass('active');
 	$('.content').removeClass('active').eq(index).addClass('active');
+};
+
+var setLoading = function () {
+    $('.loadingBar').show();
+    $('button').prop('disabled', true);
+};
+
+var clearLoading = function () {
+    $('.loadingBar').hide();
+    $('button').prop('disabled', false);
 };
 
 var loadPrefs = function () {
