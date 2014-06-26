@@ -34,7 +34,21 @@
 				</table>
 			</div>
 			<div class="content">
-				<p>impersonation area</p>
+				<table>
+                    <tr>
+                        <td>Username: </td>
+                        <td colspan="2"><input type="text" id="tbImpUserName" /></td>
+                    </tr>
+                    <tr>
+                        <td>Password: </td>
+                        <td colspan="2"><input type="text" id="tbImpPassword" /></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td><input type="checkbox" id="cbImpSavePassword" /><label for="cbImpSavePassword">Save password</label></td>
+                        <td><button class="submit" id="btnImpUserLogin">Login</button></td>
+                    </tr>
+				</table>
 			</div>
 			<div class="content">
 				<div class="prefs">
@@ -62,6 +76,7 @@
             <div id="loadingBar_8" class="loadingBar"></div>
         </div>
 
+        <div class="error-message"></div>
 		<h1>Swagger Auth</h1>
 	</div>
 </body>

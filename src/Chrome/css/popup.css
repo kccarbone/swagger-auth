@@ -54,6 +54,15 @@ p {
 	background-color: #fff;
 }
 
+.error-message {
+    position: absolute;
+    left: 8px;
+    bottom: 6px;
+    color: #e00;
+    font-size: 12px;
+    display: none;
+}
+
 h1 {
 	font-family: Tahoma, Geneva, sans-serif;
 	font-size: 14px;
