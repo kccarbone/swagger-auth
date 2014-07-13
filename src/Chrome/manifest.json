@@ -2,10 +2,14 @@
   "manifest_version": 2,
   "name": "Swagger Auth",
   "description": "Quick tool for generating auth tokens",
-  "version": "0.1",
+  "version": "0.5",
   "options_page": "settings.html",
   "browser_action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+	"default_icon": {
+		"19": "images/sa_icon19.png",
+		"38": "images/sa_icon38.png"
+	}
   },
   "permissions": [
     "activeTab",
