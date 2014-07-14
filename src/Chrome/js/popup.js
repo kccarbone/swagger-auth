@@ -12,7 +12,7 @@ var init = function () {
 		chrome.tabs.create({'url': chrome.extension.getURL("settings.html") } )
 	});
 
-	$('#btnUserLogin').on('click', function () {
+	$('#btnUserLogin, #btnImpUserLogin').on('click', function () {
 	    setLoading();
 	    saveLoginInfo();
 	    getOAuthToken();
@@ -43,6 +43,7 @@ var loadPrefs = function () {
 	chrome.storage.sync.get('prefs', function (result) {
 		if (result.prefs) {
 		    preferences = result.prefs;
+		    loadUsers();
 		}
 		else {
 			setActiveIndex(2);
@@ -51,6 +52,24 @@ var loadPrefs = function () {
 			$('.no-prefs').show();
 		}
 	});
+};
+
+var loadUsers = function () {
+    $('#ddImpersonate').html('<option value="">&lt;Nobody&gt;</option>');
+
+    $.each(preferences.Users, function () {
+        var user = this;
+        var id = '';
+
+        if (user.UserId) {
+            id = 'user-' + user.UserId;
+        }
+        if (user.ClientId) {
+            id = 'client-' + user.ClientId;
+        }
+
+        $('#ddImpersonate').append('<option value="' + id + '">' + user.Name + '</option>');
+    });
 };
 
 var saveLoginInfo = function () {
@@ -121,11 +140,14 @@ var getOAuthToken = function () {
         var environment;
         var username = $('#tbUserName').val();
         var password = $('#tbPassword').val();
-        var userId = '';
+        var name = $('#tbUserName').val();
+        var impersonateId = '';
 
         if ($('.content').eq(1).is('.active')) {
             username = $('#tbImpUserName').val();
             password = $('#tbImpPassword').val();
+            impersonateId = $('#ddImpersonate option:selected').val();
+            name = $('#ddImpersonate option:selected').text();
         }
         
         if (!tab) { showError('Tab not found'); return; }
@@ -159,7 +181,7 @@ var getOAuthToken = function () {
 
             chrome.tabs.executeScript(tab.id, { file: "js/jquery.js" }, function () {
                 chrome.tabs.executeScript(tab.id, { file: "js/content.js" }, function () {
-                    chrome.tabs.executeScript(tab.id, { code: "content.fillAuth('" + username + "', '" + data.access_token + "', '" + userId + "');" });
+                    chrome.tabs.executeScript(tab.id, { code: "content.fillAuth('" + name + "', '" + data.access_token + "', '" + impersonateId + "');" });
                 });
             });
         })

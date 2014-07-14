@@ -1,8 +1,9 @@
 var content = (function($){
 	
-    var fillAuth = function (name, token, userId) {
+    var fillAuth = function (name, token, impersonateId) {
         var $tbApiKey = $('#input_apiKey');
         var $tbUserId = $('#input_RunAs');
+        var $tbClientId = $('#input_RunClientAs');
         var $message = $('#sa-message');
 
         if ($message.length <= 0) {
@@ -21,6 +22,23 @@ var content = (function($){
                 display: 'none'
             })
             .appendTo('body');
+        }
+
+        console.log(impersonateId);
+        if (impersonateId.indexOf('user-') == 0) {
+            $tbClientId.val('');
+            $tbUserId
+                .val(impersonateId.substr(5))
+                .css({ backgroundColor: '#ffd' })
+                .on('focus', function () { $(this).css({ backgroundColor: '#fff' }) });
+        }
+
+        if (impersonateId.indexOf('client-') == 0) {
+            $tbUserId.val('');
+            $tbClientId
+                .val(impersonateId.substr(7))
+                .css({ backgroundColor: '#ffd' })
+                .on('focus', function () { $(this).css({ backgroundColor: '#fff' }) });
         }
 
         $tbApiKey

@@ -114,7 +114,7 @@ table td:first-of-type {
     padding-right: 5px;
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"], select {
     font-size: 12px;
     width: 100%;
 }

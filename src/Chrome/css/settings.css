@@ -84,8 +84,12 @@ img.delete {
     cursor: pointer;
 }
 
-#tbNewUser, #tbNewUserId {
+#tbNewUser, #tbNewUserId, #tbNewClientId {
     font-size: 12px;
     background-color: #f6f6f6;
     border: solid 1px #999;
+}
+
+#tbNewUserId, #tbNewClientId {
+    width: 100px;
 }
