@@ -1,8 +1,234 @@
 <html>
 <head>
-	<link type="text/css" href="css/popup.css" rel="stylesheet" media="all" />
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/popup.js"></script>
+    <style>
+        body {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 12px;
+	color: #222;
+}
+
+.clear {
+	clear: both;
+}
+
+p { 
+	padding: 0;
+	margin: 0 0 5px 0;
+}
+
+.main {
+	width: 300px;
+}
+
+.nav {
+	width: 100%;
+	margin-bottom: 10px;
+	border-bottom: solid 1px #c30;
+}
+
+.nav ul {
+	list-style-type: none;
+	padding-left: 47px;
+}
+
+.nav li {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 2px 5px;
+	color: #c30;
+}
+
+.nav li:hover {
+	background-color: #eee;
+	cursor: pointer;
+}
+
+.nav li.active {
+	color: #fff;
+	cursor: default;
+	background-color: #c30;
+}
+
+.nav li.disabled {
+	color: #ccc;
+	cursor: default;
+	background-color: #fff;
+}
+
+.error-message {
+    position: absolute;
+    left: 8px;
+    bottom: 6px;
+    color: #e00;
+    font-size: 12px;
+    display: none;
+}
+
+h1 {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	color: #aaa;
+	text-align: right;
+	width: 300px;
+	margin: 0;
+	padding-top: 3px;
+	border-top: solid 1px #c30;
+	position: fixed;
+	bottom: 5px;
+	right: 8px;
+}
+
+.content-wrapper {
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+.content {
+	display: none;
+    margin: 0 20px 0 0;
+}
+
+.content.active {
+	display: block;
+}
+
+.no-prefs {
+	display: none;
+}
+
+.settings-link {
+	text-align: center;
+}
+
+table {
+    border-spacing: 0;
+    width: 100%;
+}
+
+table td {
+    font-size: 12px;
+}
+
+table td:first-of-type {
+    font-weight: bold;
+    text-align: right;
+    padding-right: 5px;
+}
+
+input[type="text"], input[type="password"], select {
+    font-size: 12px;
+    width: 100%;
+}
+
+label {
+    font-size: 12px;
+}
+
+button.submit {
+    float: right;
+}
+
+#loadingBar {
+    position: relative;
+    width: 100px;
+    height: 12px;
+}
+
+.loadingBar {
+    position: absolute;
+    top: 0;
+    background-color: #fff;
+    width: 12px;
+    height: 12px;
+    -webkit-animation-name: bounce_loadingBar;
+    -webkit-animation-duration: 0.8s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: linear;
+    -webkit-transform: scale(.3);
+    animation-name: bounce_loadingBar;
+    animation-duration: 0.8s;
+    animation-iteration-count: infinite;
+    animation-direction: linear;
+    transform: scale(.3);
+    display: none;
+}
+
+#loadingBar_1 {
+    left: 0;
+    -webkit-animation-delay: 0.1s;
+    animation-delay: 0.1s;
+}
+
+#loadingBar_2 {
+    left: 13px;
+    -webkit-animation-delay: 0.2s;
+    animation-delay: 0.2s;
+}
+
+#loadingBar_3 {
+    left: 25px;
+    -webkit-animation-delay: 0.3s;
+    animation-delay: 0.3s;
+}
+
+#loadingBar_4 {
+    left: 38px;
+    -webkit-animation-delay: 0.4s;
+    animation-delay: 0.4s;
+}
+
+#loadingBar_5 {
+    left: 50px;
+    -webkit-animation-delay: 0.5s;
+    animation-delay: 0.5s;
+}
+
+#loadingBar_6 {
+    left: 63px;
+    -webkit-animation-delay: 0.6s;
+    animation-delay: 0.6s;
+}
+
+#loadingBar_7 {
+    left: 75px;
+    -webkit-animation-delay: 0.7s;
+    animation-delay: 0.7s;
+}
+
+#loadingBar_8 {
+    left: 88px;
+    -webkit-animation-delay: 0.8s;
+    animation-delay: 0.8s;
+}
+
+@-webkit-keyframes bounce_loadingBar {
+    0% {
+        -webkit-transform: scale(1);
+        background-color: #CC3300;
+    }
+
+    100% {
+        -webkit-transform: scale(.3);
+        background-color: #FFFFFF;
+    }
+}
+
+@keyframes bounce_loadingBar {
+    0% {
+        transform: scale(1);
+        background-color: #CC3300;
+    }
+
+    100% {
+        transform: scale(.3);
+        background-color: #FFFFFF;
+    }
+}
+    </style>
 </head>
 <body>
 	<div class="main">
