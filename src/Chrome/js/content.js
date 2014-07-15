@@ -24,7 +24,6 @@ var content = (function($){
             .appendTo('body');
         }
 
-        console.log(impersonateId);
         if (impersonateId.indexOf('user-') == 0) {
             $tbClientId.val('');
             $tbUserId
