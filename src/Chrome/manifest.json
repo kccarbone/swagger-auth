@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Swagger Auth",
   "description": "Quick tool for generating auth tokens",
-  "version": "0.5",
+  "version": "0.9",
   "options_page": "settings.html",
   "icons": {
 	"16": "images/icon16.png",

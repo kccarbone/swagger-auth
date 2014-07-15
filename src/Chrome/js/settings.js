@@ -1,3 +1,4 @@
+var CURRENT_PREFS_VERSION = 1;
 var preferences;
 
 var init = function () {
@@ -73,7 +74,7 @@ var loadPrefs = function () {
                     var newUser = this;
                     var exists = false;
 
-                    $.each(oldUsers, function () { if (this.UserId == newUser.UserId) { exists = true; } });
+                    $.each(oldUsers, function () { if (this.UserId == newUser.UserId && this.ClientId == newUser.ClientId) { exists = true; } });
 
                     if (!exists) {
                         oldUsers.push(newUser);
@@ -209,6 +210,11 @@ var importPrefs = function () {
 
 		return function(e) { 
 		    var newPrefs = $.parseJSON(e.target.result);
+
+		    if (newPrefs.SA_Settings_Version != CURRENT_PREFS_VERSION) {
+		        alert('The format of the settings file provided is no longer supported.');
+		        return false;
+		    }
 			
 			commitPrefs(newPrefs);
 			setTimeout(function () { loadPrefs(); }, 100);

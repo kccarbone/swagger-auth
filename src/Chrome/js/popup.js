@@ -181,7 +181,9 @@ var getOAuthToken = function () {
 
             chrome.tabs.executeScript(tab.id, { file: "js/jquery.js" }, function () {
                 chrome.tabs.executeScript(tab.id, { file: "js/content.js" }, function () {
-                    chrome.tabs.executeScript(tab.id, { code: "content.fillAuth('" + name + "', '" + data.access_token + "', '" + impersonateId + "');" });
+                    chrome.tabs.executeScript(tab.id, { code: "content.fillAuth('" + name + "', '" + data.access_token + "', '" + impersonateId + "');" }, function () {
+                        window.close();
+                    });
                 });
             });
         })
