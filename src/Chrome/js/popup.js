@@ -1,7 +1,8 @@
+var background = chrome.extension.getBackgroundPage();
 var preferences;
 
 var init = function () {
-	
+
 	$('.nav li').on('click', function () { 
 		if (!$(this).hasClass('disabled')) {
 			setActiveIndex($('.nav li').index(this));
@@ -19,8 +20,8 @@ var init = function () {
 	});
 	
 	setActiveIndex(0);
+	setLoading();
 	loadPrefs();
-	loadLoginInfo();
 };
 
 var setActiveIndex = function (index) {
@@ -40,13 +41,15 @@ var clearLoading = function () {
 };
 
 var loadPrefs = function () {
-	chrome.storage.sync.get('prefs', function (result) {
-		if (result.prefs) {
-		    preferences = result.prefs;
+	background.getPrefs(function (result) {
+		if (result) {
+		    preferences = result;
 		    loadUsers();
+		    loadLoginInfo();
 		}
 		else {
-			setActiveIndex(2);
+		    setActiveIndex(2);
+		    clearLoading();
 			$('.nav li:not(.active)').addClass('disabled');
 			$('.prefs').hide();
 			$('.no-prefs').show();
@@ -81,31 +84,29 @@ var saveLoginInfo = function () {
     var $impSavePassword = $('#cbImpSavePassword');
 
     if ($savePassword.is(':checked')) {
-        chrome.storage.sync.set({
-            savedLogin:
-                {
-                    username: $username.val(),
-                    password: $password.val(),
-                    savePassword: $savePassword.is(':checked')
-                }
-        });
+        background.setSavedLogin(
+            {
+                username: $username.val(),
+                password: $password.val(),
+                savePassword: $savePassword.is(':checked')
+            }
+        );
     }
     else {
-        chrome.storage.sync.set({ savedLogin: { savePassword: false } });
+        background.setSavedLogin({ savePassword: false });
     }
 
     if ($impSavePassword.is(':checked')) {
-        chrome.storage.sync.set({
-            savedImpLogin:
-                {
-                    impUsername: $impUsername.val(),
-                    impPassword: $impPassword.val(),
-                    impSavePassword: $impSavePassword.is(':checked')
-                }
-        });
+        background.setSavedImpLogin(
+            {
+                impUsername: $impUsername.val(),
+                impPassword: $impPassword.val(),
+                impSavePassword: $impSavePassword.is(':checked')
+            }
+        );
     }
     else {
-        chrome.storage.sync.set({ savedImpLogin: { impSavePassword: false } });
+        background.setSavedImpLogin({ impSavePassword: false });
     }
 };
 
@@ -117,20 +118,22 @@ var loadLoginInfo = function () {
     var $impPassword = $('#tbImpPassword');
     var $impSavePassword = $('#cbImpSavePassword');
 
-    chrome.storage.sync.get('savedLogin', function (result) {
-        if (result.savedLogin && result.savedLogin.savePassword) {
-            $username.val(result.savedLogin.username);
-            $password.val(result.savedLogin.password);
-            $savePassword.prop('checked', result.savedLogin.savePassword);
+    background.getSavedLogin(function (result) {
+        if (result && result.savePassword) {
+            $username.val(result.username);
+            $password.val(result.password);
+            $savePassword.prop('checked', result.savePassword);
         }
-    });
 
-    chrome.storage.sync.get('savedImpLogin', function (result) {
-        if (result.savedImpLogin && result.savedImpLogin.impSavePassword) {
-            $impUsername.val(result.savedImpLogin.impUsername);
-            $impPassword.val(result.savedImpLogin.impPassword);
-            $impSavePassword.prop('checked', result.savedImpLogin.impSavePassword);
-        }
+        background.getSavedImpLogin(function (result) {
+            if (result && result.impSavePassword) {
+                $impUsername.val(result.impUsername);
+                $impPassword.val(result.impPassword);
+                $impSavePassword.prop('checked', result.impSavePassword);
+            }
+
+            clearLoading();
+        });
     });
 };
 
@@ -148,6 +151,10 @@ var getOAuthToken = function () {
             password = $('#tbImpPassword').val();
             impersonateId = $('#ddImpersonate option:selected').val();
             name = $('#ddImpersonate option:selected').text();
+        }
+
+        if (name == '<Nobody>') {
+            name = username;
         }
         
         if (!tab) { showError('Tab not found'); return; }
@@ -177,11 +184,9 @@ var getOAuthToken = function () {
             }
         )
         .done(function (data) {
-            clearLoading();
-
             chrome.tabs.executeScript(tab.id, { file: "js/jquery.js" }, function () {
                 chrome.tabs.executeScript(tab.id, { file: "js/content.js" }, function () {
-                    chrome.tabs.executeScript(tab.id, { code: "content.fillAuth('" + name + "', '" + data.access_token + "', '" + impersonateId + "');" }, function () {
+                    chrome.tabs.executeScript(tab.id, { code: "content.fillAuth('" + htmlEscape(name) + "', '" + data.access_token + "', '" + impersonateId + "');" }, function () {
                         window.close();
                     });
                 });
@@ -201,6 +206,15 @@ var showError = function (msg) {
 var clearError = function (msg) {
     $('.error-message').hide();
 };
+
+var htmlEscape = function (str) {
+    return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
 
 $(function () {
 	init();

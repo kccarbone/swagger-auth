@@ -24,8 +24,10 @@ var content = (function($){
             .appendTo('body');
         }
 
+        $tbClientId.val('').css({ backgroundColor: '#fff' });
+        $tbUserId.val('').css({ backgroundColor: '#fff' });
+
         if (impersonateId.indexOf('user-') == 0) {
-            $tbClientId.val('');
             $tbUserId
                 .val(impersonateId.substr(5))
                 .css({ backgroundColor: '#ffd' })
@@ -33,7 +35,6 @@ var content = (function($){
         }
 
         if (impersonateId.indexOf('client-') == 0) {
-            $tbUserId.val('');
             $tbClientId
                 .val(impersonateId.substr(7))
                 .css({ backgroundColor: '#ffd' })
@@ -47,11 +48,12 @@ var content = (function($){
 
         // Inject the button click event directly into the page so that it uses
         // the page's own jQuery instance and event handlers
-        var script = document.createElement('script');
-        script.textContent = '$("#explore").trigger("click");';
-        document.head.appendChild(script);
 
-        $message.text('Authorized user: ' + name)
+        //var script = document.createElement('script');
+        //script.textContent = '$("#explore").trigger("click");';
+        //document.head.appendChild(script);
+
+        $message.html('Authorized user: ' + name)
             .show()
             .delay(3000)
             .fadeOut(2000);

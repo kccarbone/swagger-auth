@@ -2,8 +2,11 @@
   "manifest_version": 2,
   "name": "Swagger Auth",
   "description": "Quick tool for generating auth tokens",
-  "version": "0.9",
+  "version": "1.0",
   "options_page": "settings.html",
+  "background": {
+    "scripts": ["js/background.js"]
+  },
   "icons": {
 	"16": "images/icon16.png",
 	"32": "images/icon32.png",

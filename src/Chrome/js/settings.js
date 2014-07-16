@@ -1,3 +1,4 @@
+var background = chrome.extension.getBackgroundPage();
 var CURRENT_PREFS_VERSION = 1;
 var preferences;
 
@@ -32,9 +33,9 @@ var loadPrefs = function () {
         $content.append('<p class="pref-success">' + msg + '</p>');
     };
 
-    chrome.storage.sync.get('prefs', function (result) {
-        if (result.prefs) {
-            preferences = result.prefs;
+    background.getPrefs(function (result) {
+        if (result) {
+            preferences = result;
             $content.html('');
 
             if (!preferences.Token_Auth) {
@@ -82,7 +83,7 @@ var loadPrefs = function () {
                 });
 
                 preferences.Users = oldUsers;
-                commitPrefs(preferences);
+                background.setPrefs(preferences);
             }
 
             $prefs.show();
@@ -136,8 +137,7 @@ var updateUsers = function () {
             .fadeOut(300, function () { $(this).remove(); });
 
         preferences.Users.splice(index, 1);
-        commitPrefs(preferences);
-        console.log(preferences.Users);
+        background.setPrefs(preferences);
     };
 
     var createHandler = function (row) {
@@ -162,7 +162,7 @@ var updateUsers = function () {
             if ($newClientId.val() != '') newVal.ClientId = $newClientId.val();
 
             preferences.Users.push(newVal);
-            commitPrefs(preferences);
+            background.setPrefs(preferences);
 
             $newItem = $(newItemHtml);
             $row.before($newItem);
@@ -216,7 +216,7 @@ var importPrefs = function () {
 		        return false;
 		    }
 			
-			commitPrefs(newPrefs);
+		    background.setPrefs(newPrefs);
 			setTimeout(function () { loadPrefs(); }, 100);
 		} 
 
@@ -225,12 +225,9 @@ var importPrefs = function () {
 	fileReader.readAsText(fileList[0]); 
 };
 
-var commitPrefs = function (prefs) {
-    chrome.storage.sync.set({ 'prefs': prefs });
-};
-
 var clearPrefs = function () {
-    chrome.storage.sync.remove('prefs');
+    background.clearPrefs();
+    preferences = false;
     setTimeout(function () { loadPrefs(); }, 100);
 };
 
