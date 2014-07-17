@@ -176,7 +176,7 @@ var getOAuthToken = function () {
         if (preferences.Environments.length <= 0) { showError('No environments configured'); return; }
 
         $.each(preferences.Environments, function () {
-            if (tab.url.indexOf(this.API_url) >= 0) {
+            if (tab.url.toLowerCase().indexOf(this.API_url.toLowerCase()) >= 0) {
                 environment = this;
             }
         });
