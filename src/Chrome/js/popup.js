@@ -42,12 +42,15 @@ var clearLoading = function () {
 
 var loadPrefs = function () {
 	background.getPrefs(function (result) {
-		if (result) {
-		    preferences = result;
-		    loadUsers();
-		    loadLoginInfo();
-		}
-		else {
+	    if (result && !result.missing) {
+	        preferences = result;
+	        loadUsers();
+	        loadLoginInfo();
+	    }
+	    else {
+	        background.setPrefs({ missing: true });
+		    background.setSavedLogin({ savePassword: false });
+		    background.setSavedImpLogin({ impSavePassword: false });
 		    setActiveIndex(2);
 		    clearLoading();
 			$('.nav li:not(.active)').addClass('disabled');
@@ -124,12 +127,18 @@ var loadLoginInfo = function () {
             $password.val(result.password);
             $savePassword.prop('checked', result.savePassword);
         }
+        else {
+            background.setSavedLogin({ savePassword: false });
+        }
 
         background.getSavedImpLogin(function (result) {
             if (result && result.impSavePassword) {
                 $impUsername.val(result.impUsername);
                 $impPassword.val(result.impPassword);
                 $impSavePassword.prop('checked', result.impSavePassword);
+            }
+            else {
+                background.setSavedImpLogin({ impSavePassword: false });
             }
 
             clearLoading();

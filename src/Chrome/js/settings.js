@@ -34,7 +34,7 @@ var loadPrefs = function () {
     };
 
     background.getPrefs(function (result) {
-        if (result) {
+        if (result && !result.missing) {
             preferences = result;
             $content.html('');
 
