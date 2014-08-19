@@ -73,6 +73,9 @@ var loadUsers = function () {
         if (user.ClientId) {
             id = 'client-' + user.ClientId;
         }
+        if (user.EntityId) {
+            id = 'entity-' + user.EntityId;
+        }
 
         $('#ddImpersonate').append('<option value="' + id + '">' + user.Name + '</option>');
     });

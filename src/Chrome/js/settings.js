@@ -77,7 +77,7 @@ var loadPrefs = function () {
                     var newUser = this;
                     var exists = false;
 
-                    $.each(oldUsers, function () { if (this.UserId == newUser.UserId && this.ClientId == newUser.ClientId) { exists = true; } });
+                    $.each(oldUsers, function () { if (this.UserId == newUser.UserId && this.EntityId == newUser.EntityId) { exists = true; } });
 
                     if (!exists) {
                         oldUsers.push(newUser);
@@ -117,7 +117,7 @@ var updateUsers = function () {
 
     if (!!preferences.Users) {
         html += ('<table>');
-        html += ('<tr><th>&nbsp;</th><th>User</th><th>User ID</th><th>Client ID</th></tr>');
+        html += ('<tr><th>&nbsp;</th><th>User</th><th>User ID</th><th>Entity ID</th></tr>');
 
         $.each(preferences.Users, function () {
             var user = this;
@@ -126,7 +126,7 @@ var updateUsers = function () {
             html += '<td><img src="images/delete.png" class="delete" /></td>';
             html += '<td>' + user.Name + '</td>';
             html += '<td>' + (user.UserId ? user.UserId : '') + '</td>';
-            html += '<td>' + (user.ClientId ? user.ClientId : '') + '</td>';
+            html += '<td>' + (user.EntityId ? user.EntityId : '') + '</td>';
             html += '</tr>';
         });
 
@@ -134,7 +134,7 @@ var updateUsers = function () {
         html += '<td><img src="images/add.png" /></td>';
         html += '<td><input type="text" id="tbNewUser" /></td>';
         html += '<td><input type="text" id="tbNewUserId" /></td>';
-        html += '<td><input type="text" id="tbNewClientId" /></td>';
+        html += '<td><input type="text" id="tbNewEntityId" /></td>';
         html += '</tr>';
 
         html += ('</table>');
@@ -157,22 +157,22 @@ var updateUsers = function () {
         var $row = $(row);
         var $newUser = $('#tbNewUser');
         var $newUserId = $('#tbNewUserId');
-        var $newClientId = $('#tbNewClientId');
+        var $newEntityId = $('#tbNewEntityId');
         var newItemHtml = '';
         var newVal, $newItem;
 
-        if ($newUser.val() != '' && ($newUserId.val() != '' || $newClientId.val() != '')) {
+        if ($newUser.val() != '' && ($newUserId.val() != '' || $newEntityId.val() != '')) {
             newItemHtml += '<tr>';
             newItemHtml += '<td><img src="images/delete.png" class="delete" /></td>';
             newItemHtml += '<td>' + $newUser.val() + '</td>';
             newItemHtml += '<td>' + $newUserId.val() + '</td>';
-            newItemHtml += '<td>' + $newClientId.val() + '</td>';
+            newItemHtml += '<td>' + $newEntityId.val() + '</td>';
             newItemHtml += '</tr>';
 
             newVal = { Name: $newUser.val(), UserId: $newUserId.val() };
 
             if ($newUserId.val() != '') newVal.UserId = $newUserId.val();
-            if ($newClientId.val() != '') newVal.ClientId = $newClientId.val();
+            if ($newEntityId.val() != '') newVal.EntityId = $newEntityId.val();
 
             preferences.Users.push(newVal);
             background.setPrefs(preferences);
@@ -183,7 +183,7 @@ var updateUsers = function () {
             $newItem.css({ backgroundColor: '#cec' })
                 .animate({ backgroundColor: '#eee' }, 500, function () { $(this).css({ backgroundColor: '' }) })
             $newUserId.val('');
-            $newClientId.val('');
+            $newEntityId.val('');
             $newUser.val('').focus();
         }
     };
@@ -192,7 +192,7 @@ var updateUsers = function () {
         .off('click')
         .on('click', deleteHandler);
 
-    $('#tbNewUser, #tbNewUserId, #tbNewClientId')
+    $('#tbNewUser, #tbNewUserId, #tbNewEntityId')
         .off('keypress')
         .on('keypress', function (e) {
             if (e.which == 13) {
@@ -200,7 +200,7 @@ var updateUsers = function () {
             }
         });
 
-    $('#tbNewClientId')
+    $('#tbNewEntityId')
         .off('keydown')
         .on('keydown', function (e) {
             if (e.which == 9) {

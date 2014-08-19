@@ -3,6 +3,7 @@ var content = (function($){
     var fillAuth = function (name, token, impersonateId) {
         var $tbApiKey = $('#input_apiKey');
         var $tbUserId = $('#input_RunAs');
+        var $tbEntityId = $('#input_RunBusinessEntityAs');
         var $tbClientId = $('#input_RunClientAs');
         var $message = $('#sa-message');
 
@@ -24,12 +25,20 @@ var content = (function($){
             .appendTo('body');
         }
 
-        $tbClientId.val('').css({ backgroundColor: '#fff' });
+        $tbEntityId.val('').css({ backgroundColor: '#fff' });
         $tbUserId.val('').css({ backgroundColor: '#fff' });
+        $tbClientId.val('').css({ backgroundColor: '#fff' });
 
         if (impersonateId.indexOf('user-') == 0) {
             $tbUserId
                 .val(impersonateId.substr(5))
+                .css({ backgroundColor: '#ffd' })
+                .on('focus', function () { $(this).css({ backgroundColor: '#fff' }) });
+        }
+
+        if (impersonateId.indexOf('entity-') == 0) {
+            $tbEntityId
+                .val(impersonateId.substr(7))
                 .css({ backgroundColor: '#ffd' })
                 .on('focus', function () { $(this).css({ backgroundColor: '#fff' }) });
         }
