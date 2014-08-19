@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Swagger Auth",
   "description": "Quick tool for generating auth tokens for a swagger-based api",
-  "version": "0.9.2",
+  "version": "1.0.1",
   "options_page": "settings.html",
   "background": {
     "scripts": ["js/background.js"]

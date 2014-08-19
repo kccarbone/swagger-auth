@@ -80,6 +80,24 @@ h2 {
     background-color: #ddd;
 }
 
+.notice {
+    margin: 0 auto -10px auto;
+    padding: 10px;
+    width: 450px;
+    background-color: #ffe;
+    border: solid 1px #ba6;
+}
+
+.notice p {
+    padding: 0;
+    margin: 0;
+}
+
+.notice img {
+    margin-right: 5px;
+    float: left;
+}
+
 img.delete {
     cursor: pointer;
 }

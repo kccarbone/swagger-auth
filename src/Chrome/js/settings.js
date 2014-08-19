@@ -71,6 +71,8 @@ var loadPrefs = function () {
             else {
                 addSuccess('Users loaded');
 
+                var badUserIndexes = [];
+
                 $.each(preferences.Users, function () {
                     var newUser = this;
                     var exists = false;
@@ -81,6 +83,17 @@ var loadPrefs = function () {
                         oldUsers.push(newUser);
                     }
                 });
+
+                $.each(oldUsers, function (i) {
+                    if (this.ClientId && Boolean(this.ClientId.trim())) {
+                        badUserIndexes.push(i);
+                    }
+                });
+
+                if (badUserIndexes.length > 0) {
+                    $.each(badUserIndexes.reverse(), function () { oldUsers.splice(this, 1); });
+                    addSuccess('Client IDs removed');
+                }
 
                 preferences.Users = oldUsers;
                 background.setPrefs(preferences);
