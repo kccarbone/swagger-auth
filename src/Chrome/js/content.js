@@ -1,7 +1,7 @@
 var content = (function($){
 	
     var fillAuth = function (name, token, impersonateId) {
-        var $tbApiKey = $('#input_apiKey');
+        var $tbApiKey = $('#input_oAuthToken, #input_apiKey');
         var $tbUserId = $('#input_RunAs');
         var $tbEntityId = $('#input_RunBusinessEntityAs');
         var $tbClientId = $('#input_RunClientAs');
